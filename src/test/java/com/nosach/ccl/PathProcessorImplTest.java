@@ -19,7 +19,8 @@ import com.nosach.ccl.path.PathProcessorImpl;
 public class PathProcessorImplTest {
 
   private PathProcessor pathProcessor = new PathProcessorImpl();
-  private String pathString = TestHelper.getPath("/folder1");
+  private String pathToFolder = TestHelper.getPath("/folder1");
+  private String pathToFile = TestHelper.getPath("/folder1/Dave.java");
   private String notExistedPath = "notExistedPath";
 
   /**
@@ -28,9 +29,13 @@ public class PathProcessorImplTest {
    */
   @Test
   public void testGetListOfPaths() throws URISyntaxException {
-    List<Path> paths = pathProcessor.getListOfPaths(pathString);
+    List<Path> paths = pathProcessor.getListOfPaths(pathToFolder);
     assertNotNull("List of paths is null", paths);
     assertEquals("List of paths is not equal 2", 2, paths.size());
+
+    paths = pathProcessor.getListOfPaths(pathToFile);
+    assertNotNull("List of paths is null", paths);
+    assertEquals("List of paths is not equal 1", 1, paths.size());
 
     paths = pathProcessor.getListOfPaths(notExistedPath);
     assertNotNull("List of paths is null", paths);

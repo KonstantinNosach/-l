@@ -20,7 +20,6 @@ public class PathProcessorImpl implements PathProcessor {
     Path path = Paths.get(pathString);
     if (Files.exists(path)) {
       if (Files.isDirectory(path)) {
-        System.out.println("process directory");
         try (Stream<Path> s = Files.find(Paths.get(pathString), Integer.MAX_VALUE,
             (filePath, fileAttr) -> fileAttr.isRegularFile())) {
           paths.addAll(s.collect(Collectors.toList()));
@@ -28,7 +27,6 @@ public class PathProcessorImpl implements PathProcessor {
           System.err.println("Cannot get files from path: " + pathString);
         }
       } else {
-        System.out.println("process file");
         paths.add(path);
       }
     }
