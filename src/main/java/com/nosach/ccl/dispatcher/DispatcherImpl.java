@@ -38,8 +38,7 @@ public class DispatcherImpl implements Dispatcher {
     boolean singleFile = paths.size() == 1;
     for (Path path : paths) {
       try {
-        Stream<String> streamLines = Files.lines(path);
-        int number = codeProcessor.processFileLines(streamLines);
+        int number = codeProcessor.processFile(path);
         String fileName = path.getFileName().toString();
         String folderName = Paths.get(path.toString().replace(File.separator + fileName, ""))
             .getFileName().toString();
