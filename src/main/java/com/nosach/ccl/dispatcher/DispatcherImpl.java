@@ -2,14 +2,11 @@ package com.nosach.ccl.dispatcher;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
-
 import com.nosach.ccl.core.CodeLineProcessor;
 import com.nosach.ccl.core.CodeLineProcessorImpl;
 import com.nosach.ccl.output.OutputProcessor;
@@ -38,15 +35,17 @@ public class DispatcherImpl implements Dispatcher {
     boolean singleFile = paths.size() == 1;
     for (Path path : paths) {
       try {
-        int number = codeProcessor.processFile(path);
         String fileName = path.getFileName().toString();
-        String folderName = Paths.get(path.toString().replace(File.separator + fileName, ""))
-            .getFileName().toString();
-        Integer value = output.computeIfPresent(folderName, (k, v) -> v += number);
-        if (value == null && !singleFile) {
-          output.put(folderName, number);
+        if (fileName.endsWith(".java")) {
+          int number = codeProcessor.processFile(path);
+          String folderName = Paths.get(path.toString().replace(File.separator + fileName, ""))
+              .getFileName().toString();
+          Integer value = output.computeIfPresent(folderName, (k, v) -> v += number);
+          if (value == null && !singleFile) {
+            output.put(folderName, number);
+          }
+          output.put(fileName, number);
         }
-        output.put(fileName, number);
       } catch (IOException e) {
         System.err.println("Cannot process: " + input + " Error : " + e.getMessage());
       }

@@ -10,6 +10,10 @@ public class OutputProcessorImpl implements OutputProcessor {
    */
   @Override
   public void printOut(Map<String, Integer> data) {
+    if (data.isEmpty()) {
+      System.out.println("Did not find java files");
+      return;
+    }
     for (Entry<String, Integer> entry : data.entrySet()) {
       String key = entry.getKey();
       if (!key.endsWith(".java")) {
