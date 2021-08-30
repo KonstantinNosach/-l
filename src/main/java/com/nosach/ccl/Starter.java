@@ -6,7 +6,7 @@ import com.nosach.ccl.dispatcher.Dispatcher;
 import com.nosach.ccl.dispatcher.DispatcherImpl;
 
 /**
- * Entry point of application
+ * Entry point of the application
  */
 public class Starter {
 
